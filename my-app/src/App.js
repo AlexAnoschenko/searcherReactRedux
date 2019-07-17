@@ -2,23 +2,31 @@
 
 import React, { Component } from "react";
 import "./App.css";
-import InputBlock from "./components/InputBlock/InputBlock";
-import ItemsBlock from "./components/ItemsBlock/ItemsBlock";
+import InputForm from "./components/InputForm/InputForm";
+import Items from "./components/Items/Items";
 
 export default class App extends Component {
     state = {
-        items: []
+        items: [],
+        url:
+            "https://cors-anywhere.herokuapp.com/https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=buy&place_name="
     };
 
-    setItems = value => {
-        this.setState({ items: value });
+    getData = city => {
+        return fetch(this.state.url + city)
+            .then(responce => {
+                return responce.json();
+            })
+            .then(listing => {
+                this.setState({ items: listing.response.listings });
+            });
     };
 
     render() {
         return (
             <React.Fragment>
-                <InputBlock setItems={this.setItems} />
-                <ItemsBlock items={this.state.items} />
+                <InputForm getData={this.getData} />
+                <Items items={this.state.items} />
             </React.Fragment>
         );
     }
