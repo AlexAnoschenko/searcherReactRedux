@@ -1,0 +1,29 @@
+.singleItem {
+    background-color: white;
+    width: 50%;
+    height: 130px;
+    display: flex;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.imgBlock {
+    width: 30%;
+}
+
+.textBlock {
+    width: 50%;
+}
+
+.valueBlock {
+    width: 20%;
+}
+
+img {
+    height: 100%;
+}
+
+p {
+    text-align: center;
+}
