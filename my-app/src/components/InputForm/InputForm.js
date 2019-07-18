@@ -14,6 +14,10 @@ export default class InputForm extends Component {
         }
     };
 
+    toggleFavoriteStatus = event => {
+        this.props.toggleFavoriteStatus(event.target.value);
+    };
+
     render() {
         return (
             <div className="inputBlock">
@@ -22,8 +26,18 @@ export default class InputForm extends Component {
                     className="input"
                     onKeyDown={this.startSearch}
                 />
-                <input type="button" value="favorite" className="menuButton" />
-                <input type="button" value="search" className="menuButton" />
+                <input
+                    type="button"
+                    value="favorite"
+                    className="menuButton"
+                    onClick={this.toggleFavoriteStatus}
+                />
+                <input
+                    type="button"
+                    value="search"
+                    className="menuButton"
+                    onClick={this.toggleFavoriteStatus}
+                />
             </div>
         );
     }
