@@ -12,7 +12,9 @@ export default class App extends Component {
         url:
             "https://cors-anywhere.herokuapp.com/https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=buy&place_name=",
         modalItem: null,
-        modalStatus: false
+        modalStatus: false,
+        favorites: [],
+        pageStatus: "search"
     };
 
     setModalItem = value => {
@@ -33,18 +35,42 @@ export default class App extends Component {
             });
     };
 
+    addToFavorite = item => {
+        this.setState(state => ({
+            favorites: [...state.favorites, item]
+        }));
+    };
+
+    toggleFavoriteStatus = value => {
+        this.setState({ pageStatus: value });
+    };
+
+    getItems = () => {
+        if (this.state.pageStatus === "search") {
+            return this.state.items;
+        } else if (this.state.pageStatus === "favorite") {
+            return this.state.favorites;
+        } else {
+            return [];
+        }
+    };
+
     render() {
         return (
             <React.Fragment>
-                <InputForm getData={this.getData} />
+                <InputForm
+                    getData={this.getData}
+                    toggleFavoriteStatus={this.toggleFavoriteStatus}
+                />
                 <Items
-                    items={this.state.items}
+                    items={this.getItems()}
                     setModalItem={this.setModalItem}
                 />
                 {this.state.modalStatus && (
                     <ModalWindow
                         item={this.state.modalItem}
                         toggleModal={this.toggleModal}
+                        addToFavorite={this.addToFavorite}
                     />
                 )}
             </React.Fragment>

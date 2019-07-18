@@ -8,6 +8,10 @@ export default class ModalWindow extends Component {
         }
     };
 
+    addToFavorite = () => {
+        this.props.addToFavorite(this.props.item);
+    };
+
     render() {
         return (
             <div className="modal-container" onClick={this.closeModal}>
@@ -24,6 +28,12 @@ export default class ModalWindow extends Component {
                     <div className="valueBlock">
                         <p>{this.props.item.price_formatted}</p>
                     </div>
+                    <input
+                        type="button"
+                        className="add-favorite-button"
+                        value="+"
+                        onClick={this.addToFavorite}
+                    />
                 </div>
             </div>
         );
