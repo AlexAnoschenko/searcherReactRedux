@@ -8,10 +8,8 @@ export default class InputForm extends Component {
 
     startSearch = event => {
         if (event.keyCode === 13) {
-            this.setState(
-                { city: event.target.value },
-
-                () => this.props.getData(this.state.city)
+            this.setState({ city: event.target.value }, () =>
+                this.props.getData(this.state.city)
             );
         }
     };

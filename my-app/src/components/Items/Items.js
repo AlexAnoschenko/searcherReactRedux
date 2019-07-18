@@ -18,11 +18,17 @@ export default class Items extends Component {
 
     renderItems = () => {
         return this.props.items.map(item => {
-            return <SingleItem item={item} key={this.setId(item)} />;
+            return (
+                <SingleItem
+                    item={item}
+                    key={this.setId(item)}
+                    setModalItem={this.props.setModalItem}
+                />
+            );
         });
     };
 
     render() {
-        return <div className="itemsBlock">{this.renderItems()}</div>;
+        return <div className="items">{this.renderItems()}</div>;
     }
 }
