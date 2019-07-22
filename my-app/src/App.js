@@ -77,7 +77,7 @@ export default class App extends Component {
         this.setState(state => ({ modalStatus: !state.modalStatus }));
     };
 
-    makeUrl = () => {
+    getPage = () => {
         if (this.state.currentPage === null) {
             return "";
         } else {
@@ -86,7 +86,7 @@ export default class App extends Component {
     };
 
     getData = city => {
-        fetch(this.state.url + city + this.makeUrl())
+        fetch(this.state.url + city + this.getPage())
             .then(responce => {
                 return responce.json();
             })
@@ -150,6 +150,35 @@ export default class App extends Component {
         }
     };
 
+    setLoading = () => {
+        if (
+            this.state.currentPage !== null &&
+            this.state.loadSelector === false
+        ) {
+            return (
+                <Pagination
+                    setCurrentPage={this.setCurrentPage}
+                    currentPage={this.state.currentPage}
+                    pages={this.state.pages}
+                    maxPage={this.state.maxPage}
+                />
+            );
+        } else if (
+            this.state.currentPage !== null &&
+            this.state.loadSelector === true
+        ) {
+            return <Loader className="loader" loader={this.loader} />;
+        } else {
+            return null;
+        }
+    };
+
+    changeLoadingOnClick = () => {
+        this.setState(state => ({
+            loadSelector: !state.loadSelector
+        }));
+    };
+
     render() {
         return (
             <React.Fragment>
@@ -169,30 +198,14 @@ export default class App extends Component {
                         addToFavorite={this.addToFavorite}
                     />
                 )}
-                {this.state.currentPage !== null &&
-                this.state.loadSelector === false ? (
-                    <Pagination
-                        setCurrentPage={this.setCurrentPage}
-                        currentPage={this.state.currentPage}
-                        pages={this.state.pages}
-                        maxPage={this.state.maxPage}
-                    />
-                ) : null}
-                {this.state.currentPage !== null &&
-                this.state.loadSelector === true ? (
-                    <Loader className="loader" loader={this.loader} />
-                ) : null}
+                {this.setLoading()}
                 {this.state.currentPage !== null ? (
                     <center>
                         <div>
                             <input
                                 type="button"
                                 value="Change type of load content..."
-                                onClick={() =>
-                                    this.setState(state => ({
-                                        loadSelector: !state.loadSelector
-                                    }))
-                                }
+                                onClick={this.changeLoadingOnClick}
                             />
                         </div>
                     </center>
