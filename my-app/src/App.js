@@ -141,11 +141,16 @@ export default class App extends Component {
                     return responce.json();
                 })
                 .then(listing => {
-                    this.setState(state => ({
-                        currentPage: state.currentPage + 1,
-                        items: [...state.items, ...listing.response.listings]
-                    }));
-                    this.setPages();
+                    this.setState(
+                        state => ({
+                            currentPage: state.currentPage + 1,
+                            items: [
+                                ...state.items,
+                                ...listing.response.listings
+                            ]
+                        }),
+                        this.setPages
+                    );
                 });
         }
     };
@@ -199,7 +204,7 @@ export default class App extends Component {
                     />
                 )}
                 {this.setLoading()}
-                {this.state.currentPage !== null ? (
+                {this.state.currentPage !== null && (
                     <center>
                         <div>
                             <input
@@ -209,7 +214,7 @@ export default class App extends Component {
                             />
                         </div>
                     </center>
-                ) : null}
+                )}
             </React.Fragment>
         );
     }
