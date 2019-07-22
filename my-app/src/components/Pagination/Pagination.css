@@ -1,0 +1,29 @@
+.pagination {
+    display: flex;
+    flex-direction: inherit;
+    justify-content: center;
+}
+
+.firstPage {
+    color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: solid 2px white;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.lastPage {
+    color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: solid 2px white;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: red;
+    pointer-events: none;
+    cursor: default;
+}
