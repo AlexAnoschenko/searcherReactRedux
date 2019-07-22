@@ -3,12 +3,6 @@ import "./Pagination.css";
 import Page from "../Page/Page";
 
 export default class Pagination extends Component {
-    // state = {
-    //     firstSelected: false,
-    //     lastSelected: false,
-    //     pageSelected: false
-    // };
-
     renderPage = () => {
         return this.props.pages.map((item, i) => {
             return (

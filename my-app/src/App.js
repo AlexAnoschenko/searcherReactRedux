@@ -77,41 +77,35 @@ export default class App extends Component {
         this.setState(state => ({ modalStatus: !state.modalStatus }));
     };
 
-    getData = city => {
+    makeUrl = () => {
         if (this.state.currentPage === null) {
-            return fetch(this.state.url + city)
-                .then(responce => {
-                    return responce.json();
-                })
-                .then(listing => {
-                    this.setState({
+            return "";
+        } else {
+            return "&page=" + this.state.currentPage;
+        }
+    };
+
+    getData = city => {
+        fetch(this.state.url + city + this.makeUrl())
+            .then(responce => {
+                return responce.json();
+            })
+            .then(listing => {
+                this.setState(
+                    {
                         items: listing.response.listings,
                         maxPage:
                             listing.response.total_pages > 50
                                 ? 50
                                 : listing.response.total_pages,
-                        currentPage: 1
-                    });
-                    this.setPages();
-                });
-        } else {
-            return fetch(
-                this.state.url + city + "&page=" + this.state.currentPage
-            )
-                .then(responce => {
-                    return responce.json();
-                })
-                .then(listing => {
-                    this.setState({
-                        items: listing.response.listings,
-                        maxPage:
-                            listing.response.total_pages > 50
-                                ? 50
-                                : listing.response.total_pages
-                    });
-                    this.setPages();
-                });
-        }
+                        currentPage:
+                            this.state.currentPage === null
+                                ? 1
+                                : this.state.currentPage
+                    },
+                    this.setPages
+                );
+            });
     };
 
     addToFavorite = item => {
@@ -136,29 +130,23 @@ export default class App extends Component {
 
     loader = () => {
         if (this.state.currentPage < this.state.maxPage) {
-            this.setState(
-                state => ({ currentPage: +state.currentPage + 1 }),
-                () => {
-                    return fetch(
-                        this.state.url +
-                            this.state.city +
-                            "&page=" +
-                            this.state.currentPage
-                    )
-                        .then(responce => {
-                            return responce.json();
-                        })
-                        .then(listing => {
-                            this.setState(state => ({
-                                items: [
-                                    ...state.items,
-                                    ...listing.response.listings
-                                ]
-                            }));
-                            this.setPages();
-                        });
-                }
-            );
+            return fetch(
+                this.state.url +
+                    this.state.city +
+                    "&page=" +
+                    this.state.currentPage +
+                    1
+            )
+                .then(responce => {
+                    return responce.json();
+                })
+                .then(listing => {
+                    this.setState(state => ({
+                        currentPage: state.currentPage + 1,
+                        items: [...state.items, ...listing.response.listings]
+                    }));
+                    this.setPages();
+                });
         }
     };
 
