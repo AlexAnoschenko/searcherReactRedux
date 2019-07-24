@@ -1,26 +1,26 @@
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./Pagination.css";
 import Page from "../Page/Page";
+import { setEdgePage } from "../store/actions";
 
-export default class Pagination extends Component {
+class Pagination extends Component {
     renderPage = () => {
         return this.props.pages.map((item, i) => {
-            return (
-                <Page
-                    item={item}
-                    key={i}
-                    setCurrentPage={this.props.setCurrentPage}
-                    currentPage={this.props.currentPage}
-                />
-            );
+            return <Page item={item} key={i} />;
         });
     };
 
     edgePage = event => {
         if (event.target.className === "firstPage") {
-            this.props.setCurrentPage(1);
+            this.props.setEdgePage(1, this.props.city, this.props.url);
         } else if (event.target.className === "lastPage") {
-            this.props.setCurrentPage(this.props.maxPage);
+            this.props.setEdgePage(
+                this.props.maxPage,
+                this.props.city,
+                this.props.url,
+                this.props.maxPage
+            );
         }
     };
 
@@ -52,3 +52,25 @@ export default class Pagination extends Component {
         );
     }
 }
+
+const mapStateToProps = store => {
+    return {
+        pages: store.pages,
+        currentPage: store.currentPage,
+        maxPage: store.maxPage,
+        city: store.city,
+        url: store.url
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setEdgePage: (page, city, url, maxPage) =>
+            dispatch(setEdgePage(page, city, url, maxPage))
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Pagination);
