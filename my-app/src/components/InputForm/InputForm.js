@@ -1,21 +1,12 @@
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./InputForm.css";
+import { getDataRequest, toggleFavoriteStatus } from "../store/actions";
 
-export default class InputForm extends Component {
-    state = {
-        city: null
-    };
-
-    postCity = value => {
-        this.props.setCity(value);
-    };
-
+class InputForm extends Component {
     startSearch = event => {
         if (event.keyCode === 13) {
-            this.setState({ city: event.target.value }, () => {
-                this.props.getData(this.state.city);
-                this.postCity(this.state.city);
-            });
+            this.props.getDataRequest(event.target.value, this.props.url);
         }
     };
 
@@ -47,3 +38,24 @@ export default class InputForm extends Component {
         );
     }
 }
+
+const mapStateToProps = store => {
+    return {
+        city: store.city,
+        currentPage: store.currentPage,
+        maxPage: store.maxPage,
+        url: store.url
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getDataRequest: (city, url) => dispatch(getDataRequest(city, url)),
+        toggleFavoriteStatus: value => dispatch(toggleFavoriteStatus(value))
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(InputForm);

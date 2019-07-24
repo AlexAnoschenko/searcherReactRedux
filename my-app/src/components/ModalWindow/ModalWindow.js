@@ -1,7 +1,9 @@
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./ModalWindow.css";
+import { addToFavorite } from "../store/actions";
 
-export default class ModalWindow extends Component {
+class ModalWindow extends Component {
     closeModal = event => {
         if (event.target.className === "modal-container") {
             this.props.toggleModal();
@@ -39,3 +41,14 @@ export default class ModalWindow extends Component {
         );
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addToFavorite: item => dispatch(addToFavorite(item))
+    };
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(ModalWindow);

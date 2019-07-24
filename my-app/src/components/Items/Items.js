@@ -16,8 +16,8 @@ export default class Items extends Component {
         return newId;
     };
 
-    renderItems = () => {
-        return this.props.items.map(item => {
+    renderItems = type => {
+        return type.map(item => {
             return (
                 <SingleItem
                     item={item}
@@ -29,6 +29,14 @@ export default class Items extends Component {
     };
 
     render() {
-        return <div className="items">{this.renderItems()}</div>;
+        return (
+            <div className="items">
+                {this.renderItems(
+                    this.props.pageStatus === "search"
+                        ? this.props.items
+                        : this.props.favorites
+                )}
+            </div>
+        );
     }
 }
