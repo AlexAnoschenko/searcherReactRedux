@@ -23,12 +23,15 @@ export default class Items extends Component {
                     item={item}
                     key={this.setId(item)}
                     setModalItem={this.props.setModalItem}
+                    setIdModal={this.props.setIdModal}
+                    itemId={this.setId(item)}
                 />
             );
         });
     };
 
     render() {
+        console.log(window.location);
         return (
             <div className="items">
                 {this.renderItems(

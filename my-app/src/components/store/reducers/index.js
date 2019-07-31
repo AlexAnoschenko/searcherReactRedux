@@ -3,7 +3,6 @@ export const initialState = {
     url:
         "https://cors-anywhere.herokuapp.com/https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=buy&place_name=",
     modalItem: null,
-    modalStatus: false,
     favorites: [],
     pageStatus: "search",
     maxPage: null,

@@ -1,24 +1,53 @@
 import React, { Component } from "react";
 import "./SingleItem.css";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default class SingleItem extends Component {
+class SingleItem extends Component {
     toggleModal = () => {
         this.props.setModalItem(this.props.item);
     };
 
     render() {
         return (
-            <div className="singleItem" onClick={this.toggleModal}>
-                <div className="imgBlock">
-                    <img src={this.props.item.img_url} alt="" />
+            <Link
+                className="linkClass"
+                to={{
+                    pathname: `/search/${this.props.city}/${
+                        this.props.currentPage
+                    }/${this.props.itemId}`
+                }}
+            >
+                <div className="singleItem" onClick={this.toggleModal}>
+                    <div className="imgBlock">
+                        <img src={this.props.item.img_url} alt="" />
+                    </div>
+                    <div className="textBlock">
+                        <span>
+                            <b>{this.props.item.title}</b>
+                        </span>
+                        <hr />
+                        <span>{this.props.item.summary}</span>
+                        <hr />
+                        <br />
+                        <span className="keywords">
+                            {this.props.item.keywords}
+                        </span>
+                    </div>
+                    <div className="valueBlock">
+                        <p>{this.props.item.price_formatted}</p>
+                    </div>
                 </div>
-                <div className="textBlock">
-                    <p>{this.props.item.summary}</p>
-                </div>
-                <div className="valueBlock">
-                    <p>{this.props.item.price_formatted}</p>
-                </div>
-            </div>
+            </Link>
         );
     }
 }
+
+const mapStateToProps = store => {
+    return {
+        city: store.city,
+        currentPage: store.currentPage
+    };
+};
+
+export default connect(mapStateToProps)(SingleItem);
