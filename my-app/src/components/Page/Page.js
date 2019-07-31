@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./Page.css";
 import { setCurrentPageFrom } from "../store/actions";
+import { Link } from "react-router-dom";
 
 class Page extends Component {
     setCurrentPage = () => {
@@ -15,17 +16,23 @@ class Page extends Component {
 
     render() {
         return (
-            <div
-                item={this.props.item}
-                className={
-                    this.props.item === this.props.currentPage
-                        ? "singlePage selected"
-                        : "singlePage"
-                }
-                onClick={this.setCurrentPage}
+            <Link
+                to={{
+                    pathname: `/search/${this.props.city}/${this.props.item}`
+                }}
             >
-                {this.props.item}
-            </div>
+                <div
+                    item={this.props.item}
+                    className={
+                        this.props.item === this.props.currentPage
+                            ? "singlePage selected"
+                            : "singlePage"
+                    }
+                    onClick={this.setCurrentPage}
+                >
+                    {this.props.item}
+                </div>
+            </Link>
         );
     }
 }

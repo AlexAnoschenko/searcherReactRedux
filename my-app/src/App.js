@@ -7,10 +7,12 @@ import ModalWindow from "./components/ModalWindow/ModalWindow";
 import Pagination from "./components/Pagination/Pagination";
 import Loader from "./components/Loader/Loader";
 import { changeLoadingOnClick } from "./components/store/actions";
+import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
     state = {
-        modalStatus: false
+        modalStatus: false,
+        modalItem: null
     };
 
     setModalItem = value => {
@@ -42,23 +44,70 @@ class App extends Component {
         }
     };
 
+    setIdModal = item => {
+        if (this.state.modalItem != null) {
+            const firstWord = "detail/";
+            const lastWord = "/title";
+            let startIndex = item.lister_url.indexOf(firstWord);
+            let endIndex = item.lister_url.indexOf(lastWord);
+
+            var newId = item.lister_url.slice(
+                startIndex + firstWord.length + 7,
+                endIndex
+            );
+            return newId;
+        }
+    };
+
     render() {
         return (
             <React.Fragment>
                 <InputForm toggleFavoriteStatus={this.toggleFavoriteStatus} />
-                <Items
-                    pageStatus={this.props.pageStatus}
-                    favorites={this.props.favorites}
-                    items={this.props.items}
-                    setModalItem={this.setModalItem}
-                />
-                {this.state.modalStatus && (
-                    <ModalWindow
-                        item={this.state.modalItem}
-                        toggleModal={this.toggleModal}
+
+                <Switch>
+                    <Route
+                        exact
+                        path="/favorites"
+                        render={() => (
+                            <Items
+                                pageStatus={this.props.pageStatus}
+                                favorites={this.props.favorites}
+                                items={this.props.items}
+                                setModalItem={this.setModalItem}
+                            />
+                        )}
                     />
-                )}
+
+                    <Route
+                        exact
+                        path={`/search/:city/:page`}
+                        render={() => (
+                            <Items
+                                pageStatus={this.props.pageStatus}
+                                favorites={this.props.favorites}
+                                items={this.props.items}
+                                setModalItem={this.setModalItem}
+                                setIdModal={this.setIdModal}
+                            />
+                        )}
+                    />
+
+                    <Route
+                        exact
+                        path={`/search/:city/:page/:id`}
+                        render={() => (
+                            <ModalWindow
+                                item={this.state.modalItem}
+                                toggleModal={this.toggleModal}
+                                currentPage={this.props.currentPage}
+                                city={this.props.city}
+                            />
+                        )}
+                    />
+                </Switch>
+
                 {this.setLoading()}
+
                 {this.props.currentPage !== null && (
                     <center>
                         <div>
