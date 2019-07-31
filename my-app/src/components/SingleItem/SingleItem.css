@@ -12,6 +12,8 @@
 }
 
 .textBlock {
+    display: flex;
+    flex-direction: column;
     padding-top: 3px;
     width: 60%;
     padding-right: 4px;
@@ -42,10 +44,17 @@ a:active {
     text-decoration: none;
 }
 
-.keywords {
-    font-size: 10px;
-}
-
 .linkClass {
     color: black;
+}
+
+.summary {
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    flex: 3;
+}
+
+.keywords {
+    font-size: 10px;
+    flex: 1;
 }

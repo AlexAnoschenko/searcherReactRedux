@@ -26,7 +26,7 @@ class ModalWindow extends Component {
             >
                 <div className="modal-container" onClick={this.closeModal}>
                     <div className="modal">
-                        <div className="imgBlockM">
+                        <div className="imgBlockModal">
                             <img src={this.props.item.img_url} alt="" />
                         </div>
                         <div className="rooms">

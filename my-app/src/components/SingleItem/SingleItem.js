@@ -26,10 +26,11 @@ class SingleItem extends Component {
                         <span>
                             <b>{this.props.item.title}</b>
                         </span>
-                        <hr />
-                        <span>{this.props.item.summary}</span>
-                        <hr />
-                        <br />
+
+                        <span className="summary">
+                            {this.props.item.summary}
+                        </span>
+
                         <span className="keywords">
                             {this.props.item.keywords}
                         </span>

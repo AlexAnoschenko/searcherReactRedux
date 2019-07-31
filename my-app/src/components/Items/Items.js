@@ -31,7 +31,6 @@ export default class Items extends Component {
     };
 
     render() {
-        console.log(window.location);
         return (
             <div className="items">
                 {this.renderItems(
