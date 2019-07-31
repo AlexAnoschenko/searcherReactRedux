@@ -1,0 +1,22 @@
+body {
+    background-color: black;
+}
+
+.inputBlock {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.input {
+    margin-top: 10px;
+    margin-right: 5px;
+    height: 20px;
+    width: 50%;
+}
+
+.menuButton {
+    margin-top: 10px;
+    height: 26px;
+    width: 100%;
+}
